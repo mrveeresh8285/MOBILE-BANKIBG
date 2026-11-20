@@ -1,0 +1,15 @@
+ How to Run the Website Locally
+Method 1: Direct File Open (Easiest)
+Navigate to the project directory: c:\Users\HP\Desktop\Mobile Banking.
+Double-click index.html or right-click index.html -> Open with Google Chrome (or Edge / Firefox).
+The application will immediately load with full functionality.
+Method 2: Python Local Web Server
+Open PowerShell or Command Prompt in the project folder:
+cd "c:\Users\HP\Desktop\Mobile Banking"
+Start Python's built-in web server:
+python -m http.server 8000
+Open your browser and navigate to:
+http://localhost:8000
+Method 3: One-Click Windows Batch Script
+Double-click the included run-local.bat script.
+It will launch the local server and automatically open your default browser.
