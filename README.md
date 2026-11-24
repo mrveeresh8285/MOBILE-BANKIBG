@@ -1,6 +1,5 @@
 # Mobile Banking Application – Release, Performance and User Acceptance Testing
 ### Software Engineering — Assignment 2
-**Team:** 7  
 **Academic Demonstration Platform**
 
 ---
