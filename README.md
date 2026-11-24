@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Project Overview
-This project is a complete, responsive, and professional **Mobile Banking Web Application** engineered to fulfill the requirements of **Software Engineering Assignment 2 (Team 7)**.
+This project is a complete, responsive, and professional **Mobile Banking Web Application** engineered to fulfill the requirements of **Software Engineering Assignment 2 *
 
 The system delivers a modern fintech user experience (styled after premier digital banks like Revolut, Wise, and Chase) while providing comprehensive, interactive testing dashboards covering **Release Testing**, **Performance Testing**, **Alpha Testing**, **Beta Testing**, and **User Acceptance Testing (UAT)**.
 
