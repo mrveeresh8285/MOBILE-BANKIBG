@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Banking Application – Release, Performance & UAT | Team 7</title>
+  
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js CDN for Performance Benchmarks -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Application Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- ============================================================== -->
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <!-- ============================================================== -->
+  <div id="toast-container"></div>
+
+  <!-- ============================================================== -->
+  <!-- MOBILE SIDEBAR BACKDROP -->
+  <!-- ============================================================== -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop" onclick="App.closeMobileSidebar()"></div>
+
+  <!-- ============================================================== -->
+  <!-- 1. AUTHENTICATION / LOGIN VIEW -->
+  <!-- ============================================================== -->
+  <div id="auth-view-wrapper">
+    <div class="auth-container">
+      <!-- Left Hero Banner -->
+      <div class="auth-hero-pane">
+        <div class="auth-hero-brand">
+          <div class="hero-bank-logo">
+            <i class="fas fa-university"></i>
+          </div>
+          <div>
+            <h2 class="text-white text-lg font-bold">Team 7 Mobile Banking</h2>
+            <span class="text-xs text-blue-400 font-mono">SE Assignment 2 • Academic Testing Platform</span>
+          </div>
+        </div>
+
+        <div class="hero-content">
+          <h1>Modern FinTech Experience & Comprehensive Testing Suite</h1>
+          <p>
+            An enterprise-grade mobile banking simulation built to demonstrate Release Testing,
+            Performance Load Benchmarks, Alpha/Beta QA, and User Acceptance Testing (UAT).
+          </p>
+
+          <div class="auth-feature-pills">
+            <div class="feature-pill-tag"><i class="fas fa-shield-alt text-emerald"></i> AES-256 Simulated Encryption</div>
+            <div class="feature-pill-tag"><i class="fas fa-bolt text-amber"></i> Real-time Balance Synchronization</div>
+            <div class="feature-pill-tag"><i class="fas fa-tachometer-alt text-primary"></i> 200 Concurrent User Load Tests</div>
+            <div class="feature-pill-tag"><i class="fas fa-check-double text-indigo"></i> End-to-End UAT Sign-off Matrix</div>
+          </div>
+        </div>
+
+        <div class="auth-hero-footer">
+          <div>Subject: <strong>Software Engineering</strong> • Team: <strong>7</strong></div>
+          <div><i class="fas fa-graduation-cap mr-1"></i> Academic Demonstration Only</div>
+        </div>
+      </div>
+
+      <!-- Right Login Card -->
+      <div class="auth-card-pane">
+        <div class="auth-card">
+          <div class="auth-card-header">
+            <span class="badge-pill bg-blue-50 text-primary mb-2 font-mono">SECURE GATEWAY</span>
+            <h2>Sign In to Account</h2>
+            <p class="text-sm text-slate">Enter your banking credentials to access your account dashboard.</p>
+          </div>
+
+          <!-- Quick Auto-Fill Demo Helper -->
+          <div class="auth-demo-badge">
+            <div class="demo-creds-text">
+              <strong><i class="fas fa-key text-primary mr-1"></i> Demo Credentials:</strong>
+              <div>Username: <code class="font-mono text-primary font-bold">admin</code> | Password: <code class="font-mono text-primary font-bold">1234</code></div>
+            </div>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-autofill-demo" title="Auto-fill demo credentials">
+              <i class="fas fa-magic"></i> Auto-Fill
+            </button>
+          </div>
+
+          <!-- Error Alert Banner -->
+          <div id="login-error-message" class="auth-error-banner"></div>
+
+          <!-- Login Form -->
+          <form id="login-form">
+            <div class="form-group">
+              <label class="form-label" for="login-username">Username or Customer ID</label>
+              <div class="input-group">
+                <i class="fas fa-user input-group-icon"></i>
+                <input type="text" id="login-username" class="form-control" placeholder="Enter 'admin'" autocomplete="username" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="login-password">Password</label>
+              <div class="input-group">
+                <i class="fas fa-lock input-group-icon"></i>
+                <input type="password" id="login-password" class="form-control" placeholder="Enter '1234'" autocomplete="current-password" required>
+                <button type="button" class="input-group-append" id="btn-toggle-password" title="Toggle password visibility">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-4">
+              <label class="flex items-center gap-2 text-xs text-slate cursor-pointer">
+                <input type="checkbox" id="login-remember" checked>
+                <span>Remember me on this browser</span>
+              </label>
+              <a href="javascript:void(0)" onclick="App.showToast('Demo account: admin / 1234. Use Auto-Fill button.', 'info')" class="text-xs">Need Help?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="login-submit-btn">
+              <i class="fas fa-lock"></i> Sign In to Account
+            </button>
+          </form>
+
+          <div class="text-center text-xs text-muted mt-4">
+            <i class="fas fa-shield-check text-emerald mr-1"></i> Simulated TLS 1.3 256-Bit Financial Encryption
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MAIN APP WRAPPER (POST-LOGIN) -->
+  <!-- ============================================================== -->
+  <div id="app-main-wrapper" style="display: none;">
+
+    <!-- ============================================================ -->
+    <!-- SIDEBAR NAVIGATION -->
+    <!-- ============================================================ -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-badge">
+          <div class="brand-icon-box">
+            <i class="fas fa-university"></i>
+          </div>
+          <div class="brand-text">
+            <h2>Mobile Banking</h2>
+            <span>Team 7 • SE Assignment 2</span>
+          </div>
+        </div>
+        <button class="topbar-mobile-toggle text-white" onclick="App.closeMobileSidebar()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="sidebar-nav-container">
+        <!-- Group 1: Banking Services -->
+        <div class="nav-section-title">Main Banking Services</div>
+
+        <a class="nav-link active" data-route="dashboard" onclick="App.navigateTo('dashboard')">
+          <i class="fas fa-th-large"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a class="nav-link" data-route="balance-enquiry" onclick="App.navigateTo('balance-enquiry')">
+          <i class="fas fa-wallet"></i>
+          <span>Balance Enquiry</span>
+        </a>
+
+        <a class="nav-link" data-route="fund-transfer" onclick="App.navigateTo('fund-transfer')">
+          <i class="fas fa-paper-plane"></i>
+          <span>Fund Transfer</span>
+        </a>
+
+        <a class="nav-link" data-route="bill-payment" onclick="App.navigateTo('bill-payment')">
+          <i class="fas fa-file-invoice-dollar"></i>
+          <span>Bill Payment</span>
+        </a>
+
+        <a class="nav-link" data-route="transaction-history" onclick="App.navigateTo('transaction-history')">
+          <i class="fas fa-history"></i>
+          <span>Transaction History</span>
+        </a>
+
+        <!-- Group 2: Quality Assurance & Testing -->
+        <div class="nav-section-title mt-3">Testing & Quality Assurance</div>
+
+        <a class="nav-link" data-route="release-testing" onclick="App.navigateTo('release-testing')">
+          <i class="fas fa-vial"></i>
+          <span>Release Testing</span>
+          <span class="nav-badge-pill">Suite</span>
+        </a>
+
+        <a class="nav-link" data-route="performance-testing" onclick="App.navigateTo('performance-testing')">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Performance Testing</span>
+          <span class="nav-badge-pill">Load</span>
+        </a>
+
+        <a class="nav-link" data-route="alpha-testing" onclick="App.navigateTo('alpha-testing')">
+          <i class="fas fa-bug"></i>
+          <span>Alpha Testing</span>
+        </a>
+
+        <a class="nav-link" data-route="beta-testing" onclick="App.navigateTo('beta-testing')">
+          <i class="fas fa-users-cog"></i>
+          <span>Beta Testing</span>
+        </a>
+
+        <a class="nav-link" data-route="uat" onclick="App.navigateTo('uat')">
+          <i class="fas fa-clipboard-check"></i>
+          <span>UAT Matrix</span>
+        </a>
+
+        <a class="nav-link" data-route="test-results" onclick="App.navigateTo('test-results')">
+          <i class="fas fa-poll"></i>
+          <span>Test Results</span>
+        </a>
+
+        <!-- Group 3: Academic Project Info -->
+        <div class="nav-section-title mt-3">Project Metadata</div>
+
+        <a class="nav-link" data-route="about-project" onclick="App.navigateTo('about-project')">
+          <i class="fas fa-info-circle"></i>
+          <span>About Project</span>
+        </a>
+
+        <div class="nav-section-title mt-3">Account Actions</div>
+
+        <a class="nav-link text-amber" onclick="BankingModule.resetDemoData()">
+          <i class="fas fa-undo-alt text-amber"></i>
+          <span>Reset Demo Data</span>
+        </a>
+
+        <a class="nav-link text-danger" onclick="App.handleLogout()">
+          <i class="fas fa-sign-out-alt text-danger"></i>
+          <span>Sign Out</span>
+        </a>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-team-tag">
+          <span>Software Engineering</span>
+          <span class="team-pill">TEAM 7</span>
+        </div>
+        <div class="text-xs text-slate-400 font-mono">Assignment 2 • Production QA</div>
+      </div>
+    </aside>
+
+    <!-- ============================================================ -->
+    <!-- APP MAIN CONTENT -->
+    <!-- ============================================================ -->
+    <div class="app-main-content">
+
+      <!-- TOPBAR -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="topbar-mobile-toggle" onclick="App.toggleMobileSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="topbar-title-wrap">
+            <h1 id="topbar-page-title">Account Overview & Dashboard</h1>
+            <div class="topbar-breadcrumb">Mobile Banking • Team 7 Demonstration Platform</div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Live Clock -->
+          <div class="topbar-clock-badge">
+            <i class="far fa-clock text-primary"></i>
+            <span id="topbar-clock">--:--:--</span>
+          </div>
+
+          <!-- Quick Balance Pill -->
+          <div class="topbar-quick-balance-box" title="Available Balance in Primary Account">
+            <span class="quick-bal-label"><i class="fas fa-wallet mr-1"></i> Balance:</span>
+            <span class="quick-bal-amount" id="topbar-quick-balance">$18,500.75</span>
+          </div>
+
+          <!-- User Profile -->
+          <div class="topbar-user-profile">
+            <div class="user-avatar-circle">AJ</div>
+            <div class="user-meta-text">
+              <div class="user-meta-name" id="topbar-user-name">Alex J. Morgan</div>
+              <div class="user-meta-role">Admin / Customer</div>
+            </div>
+            <button class="btn btn-ghost btn-sm text-danger ml-2" title="Sign Out" onclick="App.handleLogout()">
+              <i class="fas fa-power-off"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW CONTAINER -->
+      <main class="app-view-container">
+
+        <!-- Academic Disclaimer Banner -->
+        <div class="px-8 pt-4">
+          <div class="academic-disclaimer-banner">
+            <div>
+              <i class="fas fa-graduation-cap text-blue-400 mr-2"></i>
+              <strong>Academic Demonstration Project:</strong> Software Engineering Assignment 2 • Team 7.
+              <span>All financial transactions, balances, and performance metrics are simulated using client-side localStorage.</span>
+            </div>
+            <span class="team-pill">TEAM 7</span>
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 2: DASHBOARD -->
+        <!-- ======================================================== -->
+        <section class="view-section view-active" id="view-dashboard">
+          <!-- Welcome Bar -->
+          <div class="card mb-6 bg-gradient-to-r from-blue-900 to-navy-900 text-white" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);">
+            <div class="flex justify-between items-center flex-wrap gap-4">
+              <div>
+                <span class="badge-pill bg-blue-500 text-white mb-2 font-mono">PRIMARY CHECKING & SAVINGS</span>
+                <h2 class="text-white text-2xl font-bold" id="dash-greeting">Welcome back, Alex J. Morgan</h2>
+                <p class="text-blue-100 text-sm mt-1">
+                  Account Number: <strong class="font-mono text-white" id="dash-account-number">•••• •••• •••• 7712</strong>
+                  <button class="btn btn-ghost btn-sm text-white py-0 px-1 ml-1" onclick="BankingModule.toggleAccountMask()" title="Show/Hide Account Number">
+                    <i class="fas fa-eye" id="dash-mask-toggle-icon"></i>
+                  </button>
+                  <button class="btn btn-ghost btn-sm text-white py-0 px-1" onclick="BankingModule.copyAccountNumber()" title="Copy Account Number">
+                    <i class="far fa-copy"></i>
+                  </button>
+                </p>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-primary" onclick="App.navigateTo('fund-transfer')">
+                  <i class="fas fa-paper-plane"></i> Send Money
+                </button>
+                <button class="btn btn-outline text-white border-blue-300" onclick="App.navigateTo('bill-payment')">
+                  <i class="fas fa-file-invoice"></i> Pay Bills
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Grid: Card & Metric Tiles -->
+          <div class="grid grid-3 gap-6 mb-6">
+            <!-- Virtual Debit Card Widget -->
+            <div class="fintech-card-wrapper">
+              <div class="fintech-card">
+                <div class="card-top-row">
+                  <span class="card-bank-name">Team 7 Metropolitan Bank</span>
+                  <div class="card-chip-contactless">
+                    <div class="card-chip"></div>
+                    <i class="fas fa-wifi card-contactless-icon"></i>
+                  </div>
+                </div>
+                <div class="card-number-display">
+                  4829 •••• •••• 7712
+                </div>
+                <div class="card-bottom-row">
+                  <div class="card-holder-col">
+                    <span>Cardholder</span>
+                    <div class="card-holder-name">ALEX J. MORGAN</div>
+                  </div>
+                  <div class="card-expiry-col">
+                    <span>Expires</span>
+                    <div class="card-expiry-val">08/29</div>
+                  </div>
+                  <div class="card-network-logo">VISA</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Balances Stat Card -->
+            <div class="card flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="stat-label">Available Balance</span>
+                  <span class="status-badge badge-success"><i class="fas fa-check-circle"></i> Active</span>
+                </div>
+                <div class="stat-value text-primary text-2xl" id="dash-balance">$18,500.75</div>
+                <div class="text-xs text-muted mt-1">
+                  Ledger Balance: <strong class="font-mono" id="dash-ledger-balance">$18,500.75</strong>
+                </div>
+              </div>
+
+              <!-- Daily Limit Progress -->
+              <div class="mt-4 pt-3 border-top">
+                <div class="flex justify-between text-xs text-slate mb-1">
+                  <span>Daily Transfer Limit</span>
+                  <span id="dash-limit-text">$620.00 / $5,000.00 (12%)</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" id="dash-limit-progress" style="width: 12%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total Transactions Stat Card -->
+            <div class="card flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="stat-label">Account Activity Summary</span>
+                  <i class="fas fa-chart-line text-primary"></i>
+                </div>
+                <div class="stat-value" id="dash-total-txns">8</div>
+                <div class="text-xs text-muted mt-1">Total recorded ledger entries</div>
+              </div>
+
+              <div class="grid grid-2 gap-2 mt-3 pt-3 border-top text-center text-xs">
+                <div class="p-2 bg-emerald-50 rounded">
+                  <div class="text-muted">Total Credits</div>
+                  <div class="font-mono font-bold text-emerald" id="dash-total-credits">+$4,315.50</div>
+                </div>
+                <div class="p-2 bg-red-50 rounded">
+                  <div class="text-muted">Total Debits</div>
+                  <div class="font-mono font-bold text-danger" id="dash-total-debits">-$617.49</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="card mb-6">
+            <h3 class="card-title mb-3"><i class="fas fa-bolt text-primary"></i> Quick Banking Actions</h3>
+            <div class="grid grid-4 gap-4">
+              <div class="quick-action-btn" onclick="App.navigateTo('fund-transfer')">
+                <div class="action-circle-icon"><i class="fas fa-paper-plane"></i></div>
+                <span class="action-btn-label">Fund Transfer</span>
+              </div>
+              <div class="quick-action-btn" onclick="App.navigateTo('bill-payment')">
+                <div class="action-circle-icon"><i class="fas fa-bolt"></i></div>
+                <span class="action-btn-label">Pay Bills</span>
+              </div>
+              <div class="quick-action-btn" onclick="App.navigateTo('balance-enquiry')">
+                <div class="action-circle-icon"><i class="fas fa-search-dollar"></i></div>
+                <span class="action-btn-label">Balance Enquiry</span>
+              </div>
+              <div class="quick-action-btn" onclick="App.navigateTo('release-testing')">
+                <div class="action-circle-icon"><i class="fas fa-vial"></i></div>
+                <span class="action-btn-label">Run QA Tests</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Payees & Recent Activity -->
+          <div class="grid grid-3 gap-6">
+            <!-- Saved Beneficiaries -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-user-friends text-primary"></i> Quick Payees</h3>
+                <button class="btn btn-ghost btn-sm" onclick="App.navigateTo('fund-transfer')">Transfer</button>
+              </div>
+              <div class="quick-payees-scroll" id="dash-quick-payees"></div>
+            </div>
+
+            <!-- Recent Transactions (Col-span 2) -->
+            <div class="card" style="grid-column: span 2;">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-history text-primary"></i> Recent Transactions</h3>
+                <button class="btn btn-outline btn-sm" onclick="App.navigateTo('transaction-history')">
+                  View Full History <i class="fas fa-arrow-right ml-1"></i>
+                </button>
+              </div>
+              <div id="dash-recent-transactions-list" class="flex flex-col gap-1"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 3: BALANCE ENQUIRY -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-balance-enquiry">
+          <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-dark">Real-Time Balance Enquiry</h2>
+              <p class="text-sm text-slate">Verified cryptographic ledger synchronization with simulated core banking backend.</p>
+            </div>
+            <button class="btn btn-primary" id="btn-refresh-balance" onclick="BankingModule.refreshBalance()">
+              <i class="fas fa-sync-alt"></i> Refresh Balance
+            </button>
+          </div>
+
+          <!-- Big Balance Hero Card -->
+          <div class="card mb-6" style="background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%); border-left: 5px solid var(--blue-600);">
+            <div class="grid grid-4 gap-4 items-center">
+              <div>
+                <span class="text-xs uppercase font-bold text-slate-500 tracking-wider">Available Balance</span>
+                <div class="text-2xl font-bold font-mono text-primary mt-1" id="enquiry-available-balance">$18,500.75</div>
+                <div class="text-xs text-muted mt-1" id="enquiry-last-sync-timestamp">Last synchronized: Just now</div>
+              </div>
+              <div>
+                <span class="text-xs uppercase font-bold text-slate-500 tracking-wider">Ledger Balance</span>
+                <div class="text-xl font-bold font-mono text-dark mt-1" id="enquiry-ledger-balance">$18,500.75</div>
+                <div class="text-xs text-emerald font-semibold mt-1"><i class="fas fa-check"></i> 100% Reconciled</div>
+              </div>
+              <div>
+                <span class="text-xs uppercase font-bold text-slate-500 tracking-wider">On-Hold / Uncleared</span>
+                <div class="text-xl font-bold font-mono text-slate-600 mt-1" id="enquiry-on-hold">$0.00</div>
+                <div class="text-xs text-muted mt-1">Zero pending holds</div>
+              </div>
+              <div>
+                <span class="text-xs uppercase font-bold text-slate-500 tracking-wider">Remaining Daily Limit</span>
+                <div class="text-xl font-bold font-mono text-emerald mt-1" id="enquiry-limit-remain">$4,380.00</div>
+                <div class="text-xs text-muted mt-1">Refreshes midnight UTC</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Parameters Table -->
+          <div class="card mb-6">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-id-card text-primary"></i> Account Specifications & Profile</h3>
+              <span class="badge-pill bg-emerald-50 text-emerald font-semibold"><i class="fas fa-shield-alt"></i> KYC Verified</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <tbody id="enquiry-details-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Balance Action Shortcuts -->
+          <div class="flex gap-4">
+            <button class="btn btn-outline" onclick="BankingModule.exportTransactionsCSV()">
+              <i class="fas fa-download"></i> Download Account Statement (CSV)
+            </button>
+            <button class="btn btn-ghost" onclick="window.print()">
+              <i class="fas fa-print"></i> Print Balance Certificate
+            </button>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 4: FUND TRANSFER -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-fund-transfer">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-dark">Peer-to-Peer Fund Transfer</h2>
+            <p class="text-sm text-slate">Transfer funds securely with instant balance debit, validation, and receipt generation.</p>
+          </div>
+
+          <div class="grid grid-3 gap-6">
+            <!-- Transfer Form (Col-span 2) -->
+            <div class="card" style="grid-column: span 2;">
+              <form id="fund-transfer-form">
+                <!-- Source Account Info -->
+                <div class="p-3 bg-slate-50 rounded mb-4 border flex justify-between items-center">
+                  <div>
+                    <span class="text-xs text-muted uppercase font-bold">Transfer From</span>
+                    <div class="font-bold text-dark">Alex J. Morgan (ACC-8839-2041-7712)</div>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-xs text-muted">Available</span>
+                    <div class="font-mono font-bold text-primary" id="transfer-source-balance">$18,500.75</div>
+                  </div>
+                </div>
+
+                <div class="grid grid-2 gap-4">
+                  <div class="form-group">
+                    <label class="form-label" for="transfer-beneficiary-name">Beneficiary Full Name *</label>
+                    <div class="input-group">
+                      <i class="fas fa-user input-group-icon"></i>
+                      <input type="text" id="transfer-beneficiary-name" class="form-control" placeholder="e.g. Sarah Connor" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="transfer-mode-select">Transfer Mode / Network</label>
+                    <select id="transfer-mode-select" class="form-control">
+                      <option value="IMPS (Instant 24x7 Payment)">IMPS (Instant 24x7 Transfer)</option>
+                      <option value="NEFT (Standard Batch Wire)">NEFT (Standard Batch Wire)</option>
+                      <option value="RTGS (Real-Time Gross Settlement)">RTGS (Real-Time Settlement)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-2 gap-4">
+                  <div class="form-group">
+                    <label class="form-label" for="transfer-beneficiary-acc">Beneficiary Account Number *</label>
+                    <div class="input-group">
+                      <i class="fas fa-university input-group-icon"></i>
+                      <input type="text" id="transfer-beneficiary-acc" class="form-control font-mono" placeholder="ACC-XXXX-XXXX-XXXX" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="transfer-confirm-acc">Confirm Account Number *</label>
+                    <div class="input-group">
+                      <i class="fas fa-check-double input-group-icon"></i>
+                      <input type="text" id="transfer-confirm-acc" class="form-control font-mono" placeholder="Re-enter Account Number" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="transfer-amount">Transfer Amount ($ USD) *</label>
+                  <div class="input-group">
+                    <i class="fas fa-dollar-sign input-group-icon"></i>
+                    <input type="number" step="0.01" min="1" id="transfer-amount" class="form-control font-mono text-lg font-bold" placeholder="0.00" required>
+                  </div>
+                  <!-- Quick Amount Chips -->
+                  <div class="quick-amt-group">
+                    <span class="text-xs text-muted self-center mr-1">Quick Select:</span>
+                    <button type="button" class="quick-amt-chip" data-amount="50">$50</button>
+                    <button type="button" class="quick-amt-chip" data-amount="100">$100</button>
+                    <button type="button" class="quick-amt-chip" data-amount="250">$250</button>
+                    <button type="button" class="quick-amt-chip" data-amount="500">$500</button>
+                    <button type="button" class="quick-amt-chip" data-amount="1000">$1,000</button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="transfer-remarks">Transfer Purpose / Remarks</label>
+                  <input type="text" id="transfer-remarks" class="form-control" placeholder="e.g. Monthly Rent, Invoice settlement, reimbursement">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg btn-block mt-4" id="transfer-submit-btn">
+                  <i class="fas fa-paper-plane mr-1"></i> Confirm & Transfer Funds
+                </button>
+              </form>
+            </div>
+
+            <!-- Transfer Guidelines & Daily Limit Status -->
+            <div class="flex flex-col gap-4">
+              <div class="card">
+                <h4 class="card-title text-sm"><i class="fas fa-shield-alt text-emerald"></i> Security & Limits</h4>
+                <div class="text-xs text-slate mt-2 space-y-2">
+                  <p class="mb-2"><strong>Daily Transfer Limit:</strong> $5,000.00</p>
+                  <p class="mb-2"><strong>Overdraft Protection:</strong> Strictly prevents transfers exceeding available balance.</p>
+                  <p class="mb-2"><strong>Atomicity:</strong> Double-entry balance deduction guarantees transaction safety.</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <h4 class="card-title text-sm"><i class="fas fa-star text-amber"></i> Quick Select Payees</h4>
+                <div class="text-xs text-muted mb-2">Click to auto-populate transfer details:</div>
+                <div class="space-y-2">
+                  <div class="p-2 border rounded hover:bg-blue-50 cursor-pointer mb-2" onclick="BankingModule.prefillTransfer('Sarah Connor', 'ACC-4491-0023-8812')">
+                    <strong>Sarah Connor</strong>
+                    <div class="text-muted font-mono">ACC-4491-0023-8812</div>
+                  </div>
+                  <div class="p-2 border rounded hover:bg-blue-50 cursor-pointer" onclick="BankingModule.prefillTransfer('David Miller', 'ACC-9921-3312-5544')">
+                    <strong>David Miller</strong>
+                    <div class="text-muted font-mono">ACC-9921-3312-5544</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 5: BILL PAYMENT -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-bill-payment">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-dark">Multi-Utility Bill Payments & Recharge</h2>
+            <p class="text-sm text-slate">Pay electricity, mobile recharges, and high-speed broadband bills instantly.</p>
+          </div>
+
+          <!-- Category Selector Tabs -->
+          <div class="bill-category-tabs">
+            <div class="bill-category-tab active" data-target="electricity">
+              <i class="fas fa-bolt"></i> Electricity Bill
+            </div>
+            <div class="bill-category-tab" data-target="mobile">
+              <i class="fas fa-mobile-alt"></i> Mobile Recharge
+            </div>
+            <div class="bill-category-tab" data-target="internet">
+              <i class="fas fa-wifi"></i> Internet / Broadband
+            </div>
+          </div>
+
+          <!-- Tab Pane 1: Electricity Bill -->
+          <div class="bill-tab-pane active" id="pane-electricity">
+            <div class="card max-w-2xl">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-bolt text-amber"></i> Electricity Utility Settlement</h3>
+                <span class="badge-pill electricity">Power Board</span>
+              </div>
+              <form id="bill-form-electricity">
+                <div class="form-group">
+                  <label class="form-label" for="electricity-biller-select">Select Electricity Board *</label>
+                  <select id="electricity-biller-select" class="form-control" required>
+                    <option value="National Power Grid Corp">National Power Grid Corp (Central Zone)</option>
+                    <option value="Metro Electric & Lighting">Metro Electric & Lighting (Urban Metro)</option>
+                    <option value="CleanEnergy Solar & Wind Co.">CleanEnergy Solar & Wind Co.</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="electricity-number-input">Consumer Number / Meter Account Number *</label>
+                  <div class="input-group">
+                    <i class="fas fa-barcode input-group-icon"></i>
+                    <input type="text" id="electricity-number-input" class="form-control font-mono" placeholder="e.g. ELEC-992810" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="electricity-amount-input">Bill Amount ($ USD) *</label>
+                  <div class="input-group">
+                    <i class="fas fa-dollar-sign input-group-icon"></i>
+                    <input type="number" step="0.01" min="1" id="electricity-amount-input" class="form-control font-mono text-lg font-bold" placeholder="142.50" required>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg mt-4">
+                  <i class="fas fa-check-circle mr-1"></i> Pay Electricity Bill Now
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Tab Pane 2: Mobile Recharge -->
+          <div class="bill-tab-pane" id="pane-mobile">
+            <div class="card max-w-2xl">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-mobile-alt text-primary"></i> Prepaid & Postpaid Mobile Recharge</h3>
+                <span class="badge-pill mobile">Telecom</span>
+              </div>
+              <form id="bill-form-mobile">
+                <div class="form-group">
+                  <label class="form-label" for="mobile-biller-select">Select Mobile Operator *</label>
+                  <select id="mobile-biller-select" class="form-control" required>
+                    <option value="Telecom Express 5G">Telecom Express 5G</option>
+                    <option value="SwiftTel Wireless">SwiftTel Wireless</option>
+                    <option value="Horizon Mobile Networks">Horizon Mobile Networks</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="mobile-number-input">10-Digit Mobile Number *</label>
+                  <div class="input-group">
+                    <i class="fas fa-phone input-group-icon"></i>
+                    <input type="tel" id="mobile-number-input" class="form-control font-mono" placeholder="e.g. (555) 382-9102" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="mobile-amount-input">Recharge / Plan Amount ($ USD) *</label>
+                  <div class="input-group">
+                    <i class="fas fa-dollar-sign input-group-icon"></i>
+                    <input type="number" step="0.01" min="1" id="mobile-amount-input" class="form-control font-mono text-lg font-bold" placeholder="45.00" required>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg mt-4">
+                  <i class="fas fa-bolt mr-1"></i> Recharge Mobile Number
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Tab Pane 3: Internet Bill -->
+          <div class="bill-tab-pane" id="pane-internet">
+            <div class="card max-w-2xl">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-wifi text-indigo"></i> Fiber & High-Speed Broadband</h3>
+                <span class="badge-pill internet">ISP</span>
+              </div>
+              <form id="bill-form-internet">
+                <div class="form-group">
+                  <label class="form-label" for="internet-biller-select">Internet Service Provider (ISP) *</label>
+                  <select id="internet-biller-select" class="form-control" required>
+                    <option value="FiberNet Ultra Broadband">FiberNet Ultra Broadband (Gigabit Fiber)</option>
+                    <option value="CityLink Gigabit Fiber">CityLink Gigabit Fiber</option>
+                    <option value="SkyLink Satellite Internet">SkyLink Satellite Internet</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="internet-number-input">Broadband Account / Landline ID *</label>
+                  <div class="input-group">
+                    <i class="fas fa-network-wired input-group-icon"></i>
+                    <input type="text" id="internet-number-input" class="form-control font-mono" placeholder="e.g. ISP-FIBER-88231" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="internet-amount-input">Subscription Amount ($ USD) *</label>
+                  <div class="input-group">
+                    <i class="fas fa-dollar-sign input-group-icon"></i>
+                    <input type="number" step="0.01" min="1" id="internet-amount-input" class="form-control font-mono text-lg font-bold" placeholder="79.99" required>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg mt-4">
+                  <i class="fas fa-check-circle mr-1"></i> Pay Broadband Bill
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 6: TRANSACTION HISTORY -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-transaction-history">
+          <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-dark">Transaction Ledger & Audit Trail</h2>
+              <p class="text-sm text-slate">Filter, search, inspect digital receipts, or export the ledger to CSV.</p>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn btn-primary" onclick="BankingModule.exportTransactionsCSV()">
+                <i class="fas fa-file-csv"></i> Export to CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter Toolbar Card -->
+          <div class="card mb-6">
+            <div class="grid grid-4 gap-4 items-end">
+              <div class="form-group mb-0">
+                <label class="form-label text-xs">Search Transaction</label>
+                <div class="input-group">
+                  <i class="fas fa-search input-group-icon"></i>
+                  <input type="text" id="txn-search-input" class="form-control" placeholder="Search by ID, Name, Biller...">
+                </div>
+              </div>
+
+              <div class="form-group mb-0">
+                <label class="form-label text-xs">Category</label>
+                <select id="txn-filter-category" class="form-control">
+                  <option value="all">All Categories</option>
+                  <option value="transfer">Fund Transfers</option>
+                  <option value="bill">Bill Payments</option>
+                  <option value="deposit">Deposits / Income</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-0">
+                <label class="form-label text-xs">Status</label>
+                <select id="txn-filter-status" class="form-control">
+                  <option value="all">All Statuses</option>
+                  <option value="SUCCESS">Successful</option>
+                  <option value="FAILED">Failed / Declined</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-0 flex gap-2">
+                <div class="w-full">
+                  <label class="form-label text-xs">Sort By</label>
+                  <select id="txn-sort-select" class="form-control">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="amount-high">Highest Amount</option>
+                    <option value="amount-low">Lowest Amount</option>
+                  </select>
+                </div>
+                <button class="btn btn-outline self-end" onclick="BankingModule.clearTxnFilters()" title="Reset Filters">
+                  <i class="fas fa-undo"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transaction Table Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-list-alt text-primary"></i> Ledger Records</h3>
+              <span class="badge-pill bg-slate-100 font-mono" id="txn-count-badge">8 transactions</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>TXN ID</th>
+                    <th>Date & Time</th>
+                    <th>Transaction Details</th>
+                    <th>Account / Biller</th>
+                    <th>Type</th>
+                    <th class="text-right">Amount</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-right">Receipt</th>
+                  </tr>
+                </thead>
+                <tbody id="transactions-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 7: RELEASE TESTING -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-release-testing">
+          <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-dark">Automated Release Testing Suite</h2>
+              <p class="text-sm text-slate">Formal smoke & regression checks verifying Login, Balance, Transfer, Bills, and Ledger persistence.</p>
+            </div>
+            <button class="btn btn-primary" id="btn-run-release-suite" onclick="TestingModule.runAllReleaseTests()">
+              <i class="fas fa-play"></i> Run All Release Tests
+            </button>
+          </div>
+
+          <!-- Release Verdict Banner -->
+          <div id="release-verdict-banner" class="card mb-6 bg-emerald-50 border-emerald-500" style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xl">
+                <i class="fas fa-check-double"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-dark text-lg">RELEASE CANDIDATE VERIFIED: V1.0.0 APPROVED</h3>
+                <p class="text-xs text-slate-600">5 of 5 Core Test Suites Passed (100% Coverage). Zero Blockers or Regressions detected.</p>
+              </div>
+            </div>
+            <span class="status-badge badge-success text-sm py-1 px-3">READY FOR DEPLOYMENT</span>
+          </div>
+
+          <!-- Execution Progress & Terminal Console -->
+          <div id="release-suite-progress" class="card mb-6" style="display: none;">
+            <div class="flex justify-between items-center text-xs font-bold text-slate mb-1">
+              <span>TEST SUITE EXECUTION PROGRESS</span>
+              <span id="release-progress-label">Executing...</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="release-progress-bar"></div>
+            </div>
+            <!-- Terminal Log -->
+            <div class="console-log-box" id="release-console-log"></div>
+          </div>
+
+          <!-- Test Case Cards List -->
+          <div id="release-tests-list"></div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 8: PERFORMANCE TESTING -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-performance-testing">
+          <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-dark">Performance & Concurrency Testing</h2>
+              <p class="text-sm text-slate">Simulate concurrent loads of 10, 50, 100, and 200 users. Measure response times and throughput.</p>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn btn-primary" onclick="PerformanceModule.runConcurrencySimulation(200)">
+                <i class="fas fa-rocket"></i> Run Stress Test (200 Users)
+              </button>
+              <button class="btn btn-outline" id="btn-measure-live-perf" onclick="PerformanceModule.measureLiveBrowserPerformance()">
+                <i class="fas fa-stopwatch"></i> Measure Client Latency
+              </button>
+            </div>
+          </div>
+
+          <!-- Academic Simulation Disclaimer -->
+          <div class="p-3 bg-blue-50 border border-blue-200 rounded text-xs text-blue-900 mb-6 flex items-center gap-2">
+            <i class="fas fa-info-circle text-blue-600 text-base"></i>
+            <span><strong>Simulated Performance Benchmarking:</strong> Demonstrates multi-tier concurrent user load models (10, 50, 100, 200 concurrent threads) complying with financial SLA requirements.</span>
+          </div>
+
+          <!-- Concurrency Tier Selector Buttons -->
+          <div class="card mb-6">
+            <h4 class="card-title text-sm mb-3"><i class="fas fa-users-cog text-primary"></i> Select Concurrency Test Tier to Simulate:</h4>
+            <div class="grid grid-4 gap-4">
+              <button class="btn btn-outline" onclick="PerformanceModule.runConcurrencySimulation(10)">
+                <i class="fas fa-user-friends mr-1"></i> 10 Concurrent Users
+              </button>
+              <button class="btn btn-outline" onclick="PerformanceModule.runConcurrencySimulation(50)">
+                <i class="fas fa-users mr-1"></i> 50 Concurrent Users
+              </button>
+              <button class="btn btn-outline" onclick="PerformanceModule.runConcurrencySimulation(100)">
+                <i class="fas fa-server mr-1"></i> 100 Concurrent Users
+              </button>
+              <button class="btn btn-outline" onclick="PerformanceModule.runConcurrencySimulation(200)">
+                <i class="fas fa-fire mr-1"></i> 200 Concurrent Users
+              </button>
+            </div>
+
+            <!-- Active Simulation Progress Bar -->
+            <div id="perf-simulation-progress" class="mt-4 pt-3 border-top" style="display: none;">
+              <div class="flex justify-between text-xs text-slate mb-1">
+                <span id="perf-simulation-status-text">Simulating load...</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="perf-progress-bar"></div>
+              </div>
+            </div>
+
+            <!-- Active Stats Preview -->
+            <div id="perf-active-stats-card" class="mt-4 p-3 bg-slate-50 rounded border" style="display: none;">
+              <div class="grid grid-4 gap-2 text-center text-xs">
+                <div>
+                  <div class="text-muted">Avg Response Time</div>
+                  <div class="font-mono font-bold text-primary text-base" id="perf-live-resp-val">78 ms</div>
+                </div>
+                <div>
+                  <div class="text-muted">Throughput (TPS)</div>
+                  <div class="font-mono font-bold text-emerald text-base" id="perf-live-tps-val">118 TPS</div>
+                </div>
+                <div>
+                  <div class="text-muted">Simulated Concurrency</div>
+                  <div class="font-mono font-bold text-dark text-base" id="perf-live-users-val">10 Active</div>
+                </div>
+                <div>
+                  <div class="text-muted">Error Rate</div>
+                  <div class="font-mono font-bold text-slate text-base" id="perf-live-error-val">0.00%</div>
+                </div>
+              </div>
+            </div>
+
+            <div id="live-browser-perf-result" class="mt-3" style="display: none;"></div>
+          </div>
+
+          <!-- Charts Grid: Response Time & Throughput -->
+          <div class="grid grid-2 gap-6 mb-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-chart-line text-primary"></i> Response Time vs Concurrent Users</h3>
+                <span class="badge-pill">Latency (ms)</span>
+              </div>
+              <div class="chart-container-card">
+                <canvas id="chart-response-time"></canvas>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-chart-bar text-emerald"></i> Transaction Throughput (TPS)</h3>
+                <span class="badge-pill">Requests / Sec</span>
+              </div>
+              <div class="chart-container-card">
+                <canvas id="chart-throughput"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Benchmark Summary Table -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-table text-primary"></i> Multi-Tier Concurrency Benchmark Metrics</h3>
+              <span class="badge-pill bg-slate-100 font-mono">Target SLA &lt; 500ms</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Concurrency Load</th>
+                    <th>Avg Processing Time</th>
+                    <th>P95 Latency</th>
+                    <th>Throughput (TPS)</th>
+                    <th>Simulated Error Rate</th>
+                    <th>Resource Utilization</th>
+                    <th>SLA Verdict</th>
+                  </tr>
+                </thead>
+                <tbody id="perf-summary-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 9: ALPHA TESTING -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-alpha-testing">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-dark">Alpha Testing Scenarios (Internal QA)</h2>
+            <p class="text-sm text-slate">Rigorous boundary, injection, concurrency, and fault tolerance scenarios evaluated by Team 7 internal testers.</p>
+          </div>
+
+          <!-- Alpha Scenarios Container -->
+          <div id="alpha-tests-container"></div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 10: BETA TESTING -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-beta-testing">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-dark">Beta Testing & Evaluator Feedback</h2>
+            <p class="text-sm text-slate">Evaluations by student peers and external cohorts regarding UI, navigation ease, speed, and transaction experience.</p>
+          </div>
+
+          <div class="grid grid-3 gap-6">
+            <!-- Left: Beta Feedback Form -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-comment-dots text-primary"></i> Submit Evaluator Feedback</h3>
+              </div>
+              <form id="beta-feedback-form">
+                <div class="form-group">
+                  <label class="form-label" for="beta-input-name">Tester Name *</label>
+                  <input type="text" id="beta-input-name" class="form-control" placeholder="e.g. Student Reviewer" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="beta-input-role">Evaluator Role</label>
+                  <input type="text" id="beta-input-role" class="form-control" placeholder="e.g. SE Cohort Peer / External QA">
+                </div>
+
+                <!-- Rating Sliders / Selectors -->
+                <div class="grid grid-2 gap-2 mb-3">
+                  <div>
+                    <label class="form-label text-xs">User Interface (UI)</label>
+                    <select id="beta-rating-ui" class="form-control">
+                      <option value="5">5 ★ (Exceptional)</option>
+                      <option value="4">4 ★ (Very Good)</option>
+                      <option value="3">3 ★ (Good)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label text-xs">Ease of Navigation</label>
+                    <select id="beta-rating-nav" class="form-control">
+                      <option value="5">5 ★ (Seamless)</option>
+                      <option value="4">4 ★ (Easy)</option>
+                      <option value="3">3 ★ (Moderate)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-2 gap-2 mb-3">
+                  <div>
+                    <label class="form-label text-xs">Application Speed</label>
+                    <select id="beta-rating-speed" class="form-control">
+                      <option value="5">5 ★ (Instant)</option>
+                      <option value="4">4 ★ (Fast)</option>
+                      <option value="3">3 ★ (Acceptable)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label text-xs">Transaction Flow</label>
+                    <select id="beta-rating-exp" class="form-control">
+                      <option value="5">5 ★ (Flawless)</option>
+                      <option value="4">4 ★ (Smooth)</option>
+                      <option value="3">3 ★ (Clear)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="beta-input-comment">Feedback & Suggestions *</label>
+                  <textarea id="beta-input-comment" rows="3" class="form-control" placeholder="Share your experience with the banking dashboard..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                  <i class="fas fa-paper-plane mr-1"></i> Submit Beta Evaluation
+                </button>
+              </form>
+            </div>
+
+            <!-- Right: Evaluator Review Feed (Col-span 2) -->
+            <div style="grid-column: span 2;">
+              <!-- Scorecard Header -->
+              <div class="card mb-4 bg-gradient-to-r from-blue-50 to-white flex justify-between items-center">
+                <div>
+                  <span class="text-xs uppercase font-bold text-slate-500">Cohort Satisfaction Score</span>
+                  <div class="flex items-center gap-2 mt-1">
+                    <span class="text-3xl font-extrabold text-primary" id="beta-avg-score">4.8</span>
+                    <span class="text-amber text-lg">★★★★★</span>
+                    <span class="text-xs text-muted" id="beta-total-reviews">3 Beta Reviewers</span>
+                  </div>
+                </div>
+                <span class="status-badge badge-success"><i class="fas fa-check"></i> High Usability Score</span>
+              </div>
+
+              <!-- Feedback Cards -->
+              <div id="beta-feedback-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 11: USER ACCEPTANCE TESTING (UAT) -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-uat">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-dark">User Acceptance Testing (UAT) Matrix</h2>
+            <p class="text-sm text-slate">Business-driven acceptance criteria, pre-conditions, expected vs actual outcomes, and stakeholder sign-off.</p>
+          </div>
+
+          <!-- Formal Sign-Off Banner -->
+          <div class="card mb-6" style="background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%); border-left: 5px solid var(--emerald-600);">
+            <div class="flex justify-between items-center flex-wrap gap-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xl">
+                  <i class="fas fa-certificate"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-dark text-lg">Official UAT Acceptance Sign-Off</h3>
+                  <p class="text-xs text-slate-600">All business requirements validated. Ready for production release under Team 7 governance.</p>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <span class="badge-pill bg-emerald-100 text-emerald-800 font-bold">BA: Approved</span>
+                <span class="badge-pill bg-emerald-100 text-emerald-800 font-bold">PO: Approved</span>
+                <span class="badge-pill bg-emerald-100 text-emerald-800 font-bold">QA Lead: Signed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- UAT Matrix Table Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-clipboard-list text-primary"></i> Business Acceptance Criteria Matrix</h3>
+              <span class="badge-pill bg-slate-100 font-mono">5 Test Cases</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Test ID</th>
+                    <th>Scenario & Business Requirement</th>
+                    <th>Input Data Tested</th>
+                    <th>Expected Result</th>
+                    <th>Actual Outcome</th>
+                    <th class="text-center">Status</th>
+                    <th>Sign-Off Details</th>
+                  </tr>
+                </thead>
+                <tbody id="uat-matrix-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 12: TEST RESULTS -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-test-results">
+          <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-dark">Detailed Test Results & Proof of Execution</h2>
+              <p class="text-sm text-slate">Exhaustive verification reports for Login, Balance Enquiry, and Fund Transfer scenarios.</p>
+            </div>
+            <button class="btn btn-outline" onclick="TestingModule.renderDetailedTestResults()">
+              <i class="fas fa-sync-alt"></i> Reset Test Display
+            </button>
+          </div>
+
+          <!-- 3 Detailed Test Scenarios -->
+          <div id="detailed-test-results-container"></div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- VIEW 13: ABOUT PROJECT -->
+        <!-- ======================================================== -->
+        <section class="view-section" id="view-about-project">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-dark">About Project • Team 7 Specifications</h2>
+            <p class="text-sm text-slate">Project scope, academic metadata, Software Development Life Cycle (SDLC) testing methodology, and team roster.</p>
+          </div>
+
+          <!-- Academic Header Card -->
+          <div class="card mb-6" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #ffffff;">
+            <div class="grid grid-2 gap-6 items-center">
+              <div>
+                <span class="badge-pill bg-blue-500 text-white font-mono mb-2">ACADEMIC SUBMISSION</span>
+                <h2 class="text-white text-2xl font-bold">Mobile Banking Application</h2>
+                <h3 class="text-blue-300 text-lg font-medium mt-1">Release, Performance and User Acceptance Testing</h3>
+                <div class="grid grid-3 gap-2 mt-4 text-xs font-mono">
+                  <div class="p-2 bg-slate-800 rounded">Subject: <strong>Software Engineering</strong></div>
+                  <div class="p-2 bg-slate-800 rounded">Assignment: <strong>2</strong></div>
+                  <div class="p-2 bg-blue-700 rounded text-white">Team: <strong>7</strong></div>
+                </div>
+              </div>
+              <div class="text-xs text-slate-300 space-y-2 border-left pl-6">
+                <p><strong>Primary Objective:</strong> Demonstrate end-to-end software quality assurance for a fintech mobile banking system covering Release Smoke Testing, Concurrency Performance Load Testing, Alpha Verification, Beta Community Feedback, and Formal UAT.</p>
+                <p><strong>Architecture:</strong> Client-side Single Page Application (SPA) leveraging localStorage persistence and real-time Chart.js visual analytics.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testing Types Covered Grid -->
+          <div class="card mb-6">
+            <h3 class="card-title mb-4"><i class="fas fa-shield-alt text-primary"></i> 5 Comprehensive Testing Types Implemented</h3>
+            <div class="grid grid-3 gap-4">
+              <div class="p-3 bg-slate-50 border rounded">
+                <h4 class="font-bold text-dark text-sm"><i class="fas fa-check-circle text-emerald mr-1"></i> 1. Release Testing</h4>
+                <p class="text-xs text-slate mt-1">Automated regression test suite verifying core banking workflows (Login, Balance, Transfer, Bills, Ledger) before production deployment.</p>
+              </div>
+              <div class="p-3 bg-slate-50 border rounded">
+                <h4 class="font-bold text-dark text-sm"><i class="fas fa-tachometer-alt text-primary mr-1"></i> 2. Performance Testing</h4>
+                <p class="text-xs text-slate mt-1">Simulated concurrent load tiers (10, 50, 100, 200 users) measuring response time latency (ms), TPS throughput, and SLA compliance.</p>
+              </div>
+              <div class="p-3 bg-slate-50 border rounded">
+                <h4 class="font-bold text-dark text-sm"><i class="fas fa-bug text-indigo mr-1"></i> 3. Alpha Testing</h4>
+                <p class="text-xs text-slate mt-1">Internal white-box & boundary scenarios evaluating input sanitization, floating point precision, overdraft limits, and corrupt state recovery.</p>
+              </div>
+              <div class="p-3 bg-slate-50 border rounded">
+                <h4 class="font-bold text-dark text-sm"><i class="fas fa-users text-amber mr-1"></i> 4. Beta Testing</h4>
+                <p class="text-xs text-slate mt-1">End-user cohort evaluation measuring usability, UI clarity, navigation smoothness, and interactive tester feedback ratings.</p>
+              </div>
+              <div class="p-3 bg-slate-50 border rounded">
+                <h4 class="font-bold text-dark text-sm"><i class="fas fa-clipboard-check text-emerald mr-1"></i> 5. User Acceptance Testing (UAT)</h4>
+                <p class="text-xs text-slate mt-1">Business stakeholder validation matrix verifying functional requirements against expected banking outcomes with formal sign-off.</p>
+              </div>
+              <div class="p-3 bg-slate-50 border rounded">
+                <h4 class="font-bold text-dark text-sm"><i class="fas fa-poll text-blue-600 mr-1"></i> 6. Detailed Test Scenarios</h4>
+                <p class="text-xs text-slate mt-1">In-depth input, expected output, actual output, duration, and execution trace proof for Login, Balance Enquiry, and Fund Transfers.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team 7 Roster & Responsibilities -->
+          <div class="card mb-6">
+            <h3 class="card-title mb-3"><i class="fas fa-users text-primary"></i> Team 7 Members & Work Breakdown Structure</h3>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Member Name</th>
+                    <th>Role in Team 7</th>
+                    <th>Assigned Quality Engineering Modules</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-bold text-dark">Alex J. Morgan</td>
+                    <td>Team Lead & Full-Stack Architect</td>
+                    <td>SPA Architecture, Banking State Management, Fund Transfer & Security</td>
+                    <td><span class="status-badge badge-success">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-bold text-dark">Ryan Chen</td>
+                    <td>Test Automation & Release Lead</td>
+                    <td>Release Testing Suite, Alpha Edge Cases & Storage Persistence</td>
+                    <td><span class="status-badge badge-success">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-bold text-dark">Sophia Martinez</td>
+                    <td>Performance & Reliability Engineer</td>
+                    <td>Concurrency Benchmarks (10-200 Users), Latency Analytics & Chart.js</td>
+                    <td><span class="status-badge badge-success">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-bold text-dark">David Kumar</td>
+                    <td>UI/UX & UAT Coordinator</td>
+                    <td>Responsive FinTech UI, Beta Cohort Evaluation & UAT Sign-Off Matrix</td>
+                    <td><span class="status-badge badge-success">Completed</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Technology Stack & Architecture Card -->
+          <div class="card">
+            <h3 class="card-title mb-3"><i class="fas fa-layer-group text-primary"></i> System Architecture & Tech Stack</h3>
+            <div class="grid grid-3 gap-4 text-xs">
+              <div class="p-3 bg-slate-50 rounded border">
+                <strong>Frontend Layer:</strong>
+                <p class="text-slate mt-1">HTML5 Semantic Elements, Modern CSS3 with Custom Properties, CSS Grid, Flexbox, FontAwesome 6 icons.</p>
+              </div>
+              <div class="p-3 bg-slate-50 rounded border">
+                <strong>Logic & State Layer:</strong>
+                <p class="text-slate mt-1">Pure Vanilla JavaScript (ES6+), Modular IIFE Pattern, Event-Driven Router, Chart.js for Load Analytics.</p>
+              </div>
+              <div class="p-3 bg-slate-50 rounded border">
+                <strong>Storage & Security:</strong>
+                <p class="text-slate mt-1">Browser localStorage persistence, zero external dependency or paid banking APIs, simulated atomic double-entry bookkeeping.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TRANSACTION RECEIPT MODAL -->
+  <!-- ============================================================== -->
+  <div class="modal-overlay" id="receipt-modal">
+    <div class="modal-dialog">
+      <div id="receipt-modal-body"></div>
+      <div class="p-4 bg-slate-50 border-top flex justify-end gap-2">
+        <button class="btn btn-outline" onclick="window.print()">
+          <i class="fas fa-print"></i> Print
+        </button>
+        <button class="btn btn-primary" onclick="BankingModule.closeReceiptModal()">
+          <i class="fas fa-check"></i> Close Receipt
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- SCRIPTS LOAD ORDER -->
+  <!-- ============================================================== -->
+  <script src="js/seedData.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/banking.js"></script>
+  <script src="js/performance.js"></script>
+  <script src="js/testing.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
