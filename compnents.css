@@ -1,0 +1,1209 @@
+/**
+ * Mobile Banking Application - Software Engineering Assignment 2 (Team 7)
+ * components.css - Cards, Buttons, Tables, Receipts, Test Suites & Modals
+ */
+
+/* ---------------------------------------------------- */
+/* CARDS & CONTAINERS */
+/* ---------------------------------------------------- */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--slate-200);
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+  transition: box-shadow var(--transition-normal), transform var(--transition-fast);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy-900);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-subtitle {
+  font-size: 0.8rem;
+  color: var(--slate-400);
+  margin-top: 0.15rem;
+}
+
+/* ---------------------------------------------------- */
+/* BUTTONS & CONTROLS */
+/* ---------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+  color: var(--white);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--blue-700), var(--blue-800));
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: var(--white);
+  color: var(--blue-600);
+  border-color: var(--slate-300);
+}
+.btn-outline:hover:not(:disabled) {
+  background: var(--blue-50);
+  border-color: var(--blue-300);
+  color: var(--blue-700);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--slate-600);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--slate-100);
+  color: var(--navy-900);
+}
+
+.btn-success {
+  background: var(--emerald-600);
+  color: var(--white);
+}
+.btn-success:hover:not(:disabled) {
+  background: var(--emerald-500);
+}
+
+.btn-danger {
+  background: var(--red-600);
+  color: var(--white);
+}
+.btn-danger:hover:not(:disabled) {
+  background: var(--red-500);
+}
+
+.btn-sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.78rem;
+}
+
+.btn-lg {
+  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ---------------------------------------------------- */
+/* FORMS & INPUTS */
+/* ---------------------------------------------------- */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy-800);
+  margin-bottom: 0.4rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  color: var(--navy-900);
+  background: var(--white);
+  border: 1px solid var(--slate-300);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.form-control::placeholder {
+  color: var(--slate-400);
+}
+
+.input-error {
+  border-color: var(--red-500) !important;
+  background-color: var(--red-50) !important;
+}
+
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--slate-400);
+  margin-top: 0.35rem;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-group .form-control {
+  padding-left: 2.6rem;
+}
+
+.input-group-icon {
+  position: absolute;
+  left: 0.9rem;
+  color: var(--slate-400);
+  pointer-events: none;
+  font-size: 0.95rem;
+}
+
+.input-group-append {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--slate-400);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+.input-group-append:hover {
+  color: var(--navy-900);
+}
+
+/* ---------------------------------------------------- */
+/* STATUS BADGES */
+/* ---------------------------------------------------- */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.badge-success {
+  background: var(--emerald-50);
+  color: var(--emerald-600);
+  border: 1px solid var(--emerald-100);
+}
+
+.badge-danger {
+  background: var(--red-50);
+  color: var(--red-600);
+  border: 1px solid var(--red-100);
+}
+
+.badge-warning {
+  background: var(--amber-50);
+  color: var(--amber-500);
+  border: 1px solid var(--amber-100);
+}
+
+.badge-pill {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 4px;
+  background: var(--slate-100);
+  color: var(--navy-700);
+}
+
+.badge-pill.transfer { background: var(--blue-50); color: var(--blue-700); }
+.badge-pill.bill { background: var(--purple-50); color: var(--purple-600); }
+.badge-pill.deposit { background: var(--emerald-50); color: var(--emerald-600); }
+
+/* ---------------------------------------------------- */
+/* AUTHENTICATION / LOGIN PAGE */
+/* ---------------------------------------------------- */
+#auth-view-wrapper {
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 50%, var(--blue-900) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.auth-hero-pane {
+  flex: 1.1;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--white);
+  position: relative;
+  background: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.25) 0%, transparent 60%);
+}
+
+.auth-hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero-bank-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.5);
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.05rem;
+  color: #94a3b8;
+  max-width: 520px;
+  margin-bottom: 2rem;
+}
+
+.auth-feature-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.feature-pill-tag {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.auth-hero-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #64748b;
+  font-size: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1.5rem;
+}
+
+.auth-card-pane {
+  flex: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--white);
+  border-radius: var(--border-radius-xl);
+  padding: 2.75rem 2.25rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.auth-card-header {
+  margin-bottom: 1.75rem;
+}
+
+.auth-card-header h2 {
+  font-size: 1.6rem;
+  color: var(--navy-900);
+}
+
+.auth-demo-badge {
+  background: var(--blue-50);
+  border: 1px dashed var(--blue-400);
+  border-radius: var(--border-radius-sm);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.demo-creds-text {
+  font-size: 0.8rem;
+  color: var(--navy-800);
+}
+
+.auth-error-banner {
+  background: var(--red-50);
+  border: 1px solid var(--red-100);
+  color: var(--red-600);
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.82rem;
+  margin-bottom: 1.25rem;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ---------------------------------------------------- */
+/* VIRTUAL DEBIT / PLATINUM CARD COMPONENT */
+/* ---------------------------------------------------- */
+.fintech-card-wrapper {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.fintech-card {
+  width: 100%;
+  height: 220px;
+  border-radius: var(--border-radius-lg);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1d4ed8 100%);
+  color: var(--white);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.fintech-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-bank-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #93c5fd;
+}
+
+.card-chip-contactless {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card-chip {
+  width: 36px;
+  height: 28px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #d4af37, #f3e5ab, #aa7c11);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.card-contactless-icon {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.card-number-display {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  letter-spacing: 0.15em;
+  color: var(--white);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.card-bottom-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.card-holder-col span,
+.card-expiry-col span {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  display: block;
+}
+
+.card-holder-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.card-expiry-val {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.card-network-logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: -0.05em;
+  color: var(--white);
+}
+
+/* ---------------------------------------------------- */
+/* STAT & METRIC TILES */
+/* ---------------------------------------------------- */
+.stat-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--slate-200);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stat-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+}
+
+.stat-icon-blue { background: var(--blue-50); color: var(--blue-600); }
+.stat-icon-green { background: var(--emerald-50); color: var(--emerald-600); }
+.stat-icon-red { background: var(--red-50); color: var(--red-600); }
+.stat-icon-purple { background: var(--purple-50); color: var(--purple-600); }
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--slate-500);
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--navy-900);
+  line-height: 1.2;
+  font-family: var(--font-mono);
+}
+
+.stat-subtext {
+  font-size: 0.72rem;
+  color: var(--slate-400);
+  margin-top: 0.2rem;
+}
+
+/* ---------------------------------------------------- */
+/* QUICK ACTIONS & PAYEES */
+/* ---------------------------------------------------- */
+.quick-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quick-action-btn:hover {
+  border-color: var(--blue-500);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
+  transform: translateY(-2px);
+}
+
+.action-circle-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--blue-50);
+  color: var(--blue-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all var(--transition-fast);
+}
+
+.quick-action-btn:hover .action-circle-icon {
+  background: var(--blue-600);
+  color: var(--white);
+}
+
+.action-btn-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--navy-800);
+  text-align: center;
+}
+
+/* Quick Payees */
+.quick-payees-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+}
+
+.quick-payee-card {
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: var(--border-radius);
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quick-payee-card:hover {
+  background: var(--blue-50);
+  border-color: var(--blue-300);
+}
+
+.payee-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-800));
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.payee-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--navy-900);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+}
+
+.payee-bank {
+  font-size: 0.65rem;
+  color: var(--slate-400);
+  text-align: center;
+}
+
+/* ---------------------------------------------------- */
+/* TRANSACTION ITEMS & DATA TABLES */
+/* ---------------------------------------------------- */
+.transaction-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+  transition: background var(--transition-fast);
+  cursor: pointer;
+}
+
+.transaction-item:hover {
+  background: var(--slate-50);
+}
+
+.txn-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.icon-credit { background: var(--emerald-50); color: var(--emerald-600); }
+.icon-debit { background: var(--slate-100); color: var(--navy-700); }
+
+.txn-info {
+  flex: 1;
+}
+
+.txn-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy-900);
+  margin-bottom: 0.15rem;
+}
+
+.txn-meta {
+  font-size: 0.75rem;
+  color: var(--slate-400);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dot-separator {
+  color: var(--slate-300);
+}
+
+.txn-amount-status {
+  text-align: right;
+}
+
+.txn-amount {
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+/* Data Table Styling */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.85rem;
+}
+
+.data-table th {
+  background: var(--slate-50);
+  color: var(--slate-600);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--slate-200);
+  text-align: left;
+}
+
+.data-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--slate-100);
+  color: var(--navy-800);
+  vertical-align: middle;
+}
+
+.data-table tbody tr:hover td {
+  background: var(--slate-50);
+}
+
+.txn-row-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: var(--blue-50);
+  color: var(--blue-600);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+/* ---------------------------------------------------- */
+/* BILL PAYMENT TABS */
+/* ---------------------------------------------------- */
+.bill-category-tabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--slate-200);
+  padding-bottom: 0.75rem;
+}
+
+.bill-category-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  background: var(--slate-100);
+  color: var(--slate-600);
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.bill-category-tab:hover {
+  background: var(--slate-200);
+}
+
+.bill-category-tab.active {
+  background: var(--blue-600);
+  color: var(--white);
+}
+
+.bill-tab-pane {
+  display: none;
+}
+
+.bill-tab-pane.active {
+  display: block;
+}
+
+/* ---------------------------------------------------- */
+/* TESTING MODULES & TEST RUNNER STYLES */
+/* ---------------------------------------------------- */
+.test-card {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: all var(--transition-fast);
+}
+
+.test-card:hover {
+  border-color: var(--blue-300);
+  box-shadow: var(--shadow-sm);
+}
+
+.test-passed-highlight {
+  background-color: var(--emerald-50) !important;
+  border-color: var(--emerald-500) !important;
+}
+
+.test-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.test-id-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--slate-100);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--blue-700);
+  margin-right: 0.5rem;
+}
+
+.test-title {
+  font-size: 0.95rem;
+  display: inline;
+}
+
+.test-assert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 0.75rem 0;
+}
+
+.assert-box {
+  background: var(--slate-50);
+  padding: 0.75rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.78rem;
+  border: 1px solid var(--slate-200);
+}
+
+.assert-box.expected { border-left: 3px solid var(--blue-500); }
+.assert-box.actual { border-left: 3px solid var(--emerald-500); }
+
+.assert-label {
+  display: block;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  color: var(--slate-500);
+  margin-bottom: 0.25rem;
+}
+
+.test-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--slate-500);
+  border-top: 1px solid var(--slate-100);
+  padding-top: 0.6rem;
+}
+
+/* Console Terminal Log */
+.console-log-box {
+  background: #090e1a;
+  color: #38bdf8;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 1rem;
+  border-radius: var(--border-radius-sm);
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #1e293b;
+  margin-top: 1rem;
+}
+
+.log-line { margin-bottom: 4px; }
+.log-line.pass { color: #4ade80; }
+.log-line.fail { color: #f87171; }
+.log-line.info { color: #60a5fa; }
+
+/* Progress bar */
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background: var(--slate-200);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0.75rem 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue-600), var(--emerald-500));
+  width: 0%;
+  transition: width 0.2s ease;
+}
+
+/* ---------------------------------------------------- */
+/* PERFORMANCE TESTING COMPONENTS */
+/* ---------------------------------------------------- */
+.chart-container-card {
+  position: relative;
+  height: 320px;
+  width: 100%;
+}
+
+.user-pill {
+  background: var(--blue-50);
+  color: var(--blue-700);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+/* ---------------------------------------------------- */
+/* ALPHA TESTING CARDS */
+/* ---------------------------------------------------- */
+.alpha-card {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.alpha-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.detail-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--slate-400);
+}
+
+.detail-value {
+  font-size: 0.8rem;
+}
+
+/* ---------------------------------------------------- */
+/* BETA FEEDBACK */
+/* ---------------------------------------------------- */
+.beta-feedback-card {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.star-rating {
+  letter-spacing: 2px;
+  font-size: 1rem;
+}
+
+/* ---------------------------------------------------- */
+/* DETAILED TEST RESULTS (FEATURE 12) */
+/* ---------------------------------------------------- */
+.detailed-test-card {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.test-num-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-800));
+  color: var(--white);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-family: var(--font-mono);
+}
+
+.io-card {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--border-radius-sm);
+  padding: 0.85rem;
+}
+
+.io-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.trace-box {
+  background: #f1f5f9;
+  border-radius: var(--border-radius-sm);
+  padding: 0.75rem 1rem;
+}
+
+.trace-steps {
+  padding-left: 1.25rem;
+  font-size: 0.78rem;
+  color: var(--slate-700);
+  font-family: var(--font-mono);
+}
+
+.trace-steps li {
+  margin-bottom: 3px;
+}
+
+/* ---------------------------------------------------- */
+/* MODAL SYSTEM & DIGITAL RECEIPT */
+/* ---------------------------------------------------- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-overlay.modal-open {
+  display: flex;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-dialog {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  position: relative;
+  animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.receipt-card {
+  padding: 2rem 1.75rem;
+  text-align: center;
+}
+
+.receipt-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--blue-700);
+  margin-bottom: 1.25rem;
+}
+
+.receipt-status-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+.receipt-status-icon.success {
+  background: var(--emerald-50);
+  color: var(--emerald-600);
+  border: 2px solid var(--emerald-500);
+}
+
+.receipt-status-icon.failed {
+  background: var(--red-50);
+  color: var(--red-600);
+  border: 2px solid var(--red-500);
+}
+
+.receipt-status-text {
+  font-size: 1.25rem;
+  color: var(--navy-900);
+  margin-bottom: 0.25rem;
+}
+
+.receipt-amount {
+  font-size: 1.75rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  margin: 0.5rem 0;
+}
+
+.receipt-subtitle {
+  font-size: 0.85rem;
+  color: var(--slate-500);
+}
+
+.receipt-divider {
+  border-top: 1px dashed var(--slate-300);
+  margin: 1.5rem 0;
+}
+
+.receipt-details {
+  text-align: left;
+  font-size: 0.82rem;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.receipt-row span:first-child {
+  color: var(--slate-500);
+}
+
+.receipt-footer-note {
+  font-size: 0.72rem;
+  color: var(--slate-400);
+  margin-top: 1.25rem;
+}
+
+/* Quick Amount Pills */
+.quick-amt-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.quick-amt-chip {
+  padding: 0.35rem 0.75rem;
+  background: var(--slate-100);
+  border: 1px solid var(--slate-200);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--navy-800);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quick-amt-chip:hover {
+  background: var(--blue-50);
+  border-color: var(--blue-400);
+  color: var(--blue-700);
+}
