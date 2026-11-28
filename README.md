@@ -1,4 +1,4 @@
-x# Mobile Banking Application – Release, Performance and User Acceptance Testing
+# Mobile Banking Application – Release, Performance and User Acceptance Testing
 ### Software Engineering — Assignment 2
 **Academic Demonstration Platform**
 
